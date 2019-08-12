@@ -10,16 +10,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kko.domain.model.HouseMoneyOfBankNm;
+import com.kko.domain.repository.HouseMoneyRepository;
 import com.kko.dto.HouseMoneyYearDto;
 import com.kko.service.HouseMoneyService;
 
 @RunWith(SpringRunner.class)
 @Transactional
 @SpringBootTest	
-public class HouseMoneyYearAmount {
+public class HouseMoneyTest {
 
 	@Autowired
 	HouseMoneyService houseMoneyService;
+	
+	@Autowired
+	HouseMoneyRepository houseMoneyRepository;
 	
 	@Test
 	public void getHouseTotalAmountOfYear() {
@@ -33,5 +38,13 @@ public class HouseMoneyYearAmount {
 		
 	    assert (totAmount.equals(dtSum));
 		
+	}
+	
+	@Test
+	public void getHouseMaxAmount() {
+		HouseMoneyOfBankNm houseMoney = houseMoneyRepository.findHouseMaxAmountBy("2004", "2017");
+		
+		 assert (houseMoney.getSuptYear().isEmpty());
+		 assert (houseMoney.getAmount() > 0 );
 	}
 }
