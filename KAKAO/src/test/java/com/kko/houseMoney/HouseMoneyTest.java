@@ -2,6 +2,7 @@ package com.kko.houseMoney;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kko.domain.model.HouseMoneyOfBankNm;
 import com.kko.domain.repository.HouseMoneyRepository;
+import com.kko.dto.HouseMoneySupportAmountDto;
 import com.kko.dto.HouseMoneyYearDto;
 import com.kko.service.HouseMoneyService;
 
@@ -46,5 +48,16 @@ public class HouseMoneyTest {
 		
 		 assert (houseMoney.getSuptYear().isEmpty());
 		 assert (houseMoney.getAmount() > 0 );
+	}
+	
+	@Test
+	public void getHouseAvgAmount() {
+		List<HouseMoneyOfBankNm> houseMoneys = houseMoneyRepository.findHouseAvgAmountBy();
+		
+		HouseMoneyOfBankNm amountDto =houseMoneys.stream().filter(p->p.getSuptYear().equals("2015")).collect(Collectors.toList()).get(0);
+		Double avgAmount = (double) (amountDto.getAmount() / 12);
+		
+		Long roundAvgAmount =Math.round(avgAmount);
+		assert (roundAvgAmount > avgAmount);
 	}
 }

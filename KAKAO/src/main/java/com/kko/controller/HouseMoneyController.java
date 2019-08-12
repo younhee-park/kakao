@@ -140,7 +140,7 @@ public class HouseMoneyController {
 	
 	@GetMapping("/biz/house/instituteOfMaxAmount")
 	public ResponseEntity<HouseMoneyDto> getInstituteOfMaxAmount(
-			@RequestParam(name="fromYear", defaultValue="2004") @Min(2004) String fromYear,
+			@RequestParam(name="fromYear", defaultValue="2005") @Min(2005) String fromYear,
 			@RequestParam(name="toYear", defaultValue="2017") @Max(2017) String toYear) {
 
 		HouseMoneyDto result = houseMoneyService.getInstituteOfLargestAmount(fromYear, toYear);
